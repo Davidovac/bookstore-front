@@ -15,7 +15,7 @@ const Publishers = () => {
       setPublishers(data || []);
       setError('');
     } catch (error) {
-      setError('Greška pri učitavanju proizvoda.');
+      setError('Greska pri ucitavanju izdavaca.');
     }
     setLoading(false);
   }
@@ -28,6 +28,7 @@ const Publishers = () => {
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
   return (
     <div id="publishers-container">
+      <h3>Prikaz izdavaca</h3>
       <table>
           <thead>
             <tr>

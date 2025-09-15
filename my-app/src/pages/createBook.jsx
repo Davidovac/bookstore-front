@@ -4,7 +4,7 @@ import "../styles.scss";
 const CreateBook = () => {
   return (
     <div id="createBook-container">
-      
+      <h2>Forma za kreiranje/edit knjiga</h2>
     </div>
   );
 }
