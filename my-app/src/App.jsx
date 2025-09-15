@@ -12,9 +12,10 @@ const App = () => {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/publishers" element={<Publishers />}></Route>
-          <Route path="/books" element={<Books />}></Route>
-          <Route path="/createBook" element={<CreateBook />}></Route>
+          <Route path="/publishers" element={<Publishers />}/>
+          <Route path="/books" element={<Books />}/>
+          <Route path="/createBook" element={<CreateBook />}/>
+            <Route path="createBook/:id" element={<CreateBook />} />
         </Routes>
       </BrowserRouter>
     </div>

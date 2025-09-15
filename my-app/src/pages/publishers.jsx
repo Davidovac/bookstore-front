@@ -32,6 +32,7 @@ const Publishers = () => {
       <table>
           <thead>
             <tr>
+              <th>ID</th>
               <th>Naziv</th>
               <th>Adresa</th>
               <th>Website</th>
