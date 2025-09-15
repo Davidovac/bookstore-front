@@ -1,9 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import "../styles.scss";
+import Publisher from "../components/publisher.jsx";
+import { getAllPublishers } from "../services/publishers.service.jsx";
 
 const Publishers = () => {
+  const [publishers, setPublishers] = useState([]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  const loadPublishers = async () => {
+    try {
+      setLoading(true);
+      const data = await getAllPublishers();
+      setPublishers(data || []);
+      setError('');
+    } catch (error) {
+      setError('Greška pri učitavanju proizvoda.');
+    }
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    loadPublishers();
+  }, []);
+
+  if (loading) return <div id="loadingSpinner" className="spinner"></div>;
+  if (error) return <p style={{ color: 'red' }}>{error}</p>;
   return (
-    <div className="publishers-container">
-      
+    <div id="publishers-container">
+      <table>
+          <thead>
+            <tr>
+              <th>Naziv</th>
+              <th>Adresa</th>
+              <th>Website</th>
+            </tr>
+          </thead>
+          <tbody>
+            {publishers.map((p) => (
+              <Publisher key={p.id} p={p}/>
+            ))}
+          </tbody>
+      </table>
     </div>
   );
 }
