@@ -12,11 +12,10 @@ const Book = ({b, onEdit, onDelete}) => {
   return (
     <tr className="book-row">
       <td>{b.title}</td>
-      <td>{b.author.fullName}</td>
-      <td>{b.pageCount}</td>
-      <td>{formatDate(b.publishedDate)}</td>
+      <td>{b.authorFullName}</td>
+      <td>{b.existsFor} godina</td>
       <td>{b.isbn}</td>
-      <td>{b.publisher.name}</td>
+      <td>{b.publisherName}</td>
       <td><input type="button" value="Edit" onClick={() => onEdit()} /></td>
       <td><input type="button" value="Delete" onClick={() => onDelete(b.id)} /></td>
     </tr>

@@ -60,16 +60,29 @@ h3, h2 {
   color: #155ce0;
 }
 
+.paging {
+  button, input[type="button"] {
+    min-width: 6vh;
+    padding: 0.1rem;
+    border-radius: 14px;
+    background-color: transparent;
+    border: none;
+    color: rgb(49, 50, 58);
+    font-size: 0.9rem;
+    &:hover {
+      cursor: pointer;
+      background-color: #c6c8ce;
+    }
+  }
+}
+    
 
-//-------------CONTENT---------------
 
-#publishers-container, #books-container {
-  margin: 2vh;
-  table, th, td {
+table, th, td {
     border: 2px solid rgb(48, 36, 32);
   }
   table {
-    
+    margin-bottom: 2vh;
     border-collapse: collapse;
     thead {
       tr {
@@ -105,6 +118,13 @@ h3, h2 {
       }
     }
   }
+
+
+//-------------CONTENT---------------
+
+#publishers-container, #books-container, #authors-container {
+  margin: 2vh;
+  
 }
 
 .form-container {

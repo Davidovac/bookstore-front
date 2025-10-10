@@ -9,6 +9,7 @@ const Header = () => {
   return (
     <div className="nav-bar">
       <Link className={current === "/publishers" ? "hidden" : ""} to="/publishers">Izdavaci</Link>
+      <Link className={current === "/authors" ? "hidden" : ""} to="/authors?page=1">Autori</Link>
       <Link className={current === "/books" ? "hidden" : ""} to="/books">Knjige</Link>
       <Link className={current === "/createBook" ? "hidden" : ""} to="/createBook">Dodaj knjigu</Link>
     </div>

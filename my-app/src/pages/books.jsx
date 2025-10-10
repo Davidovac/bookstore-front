@@ -64,8 +64,7 @@ const Books = () => {
             <tr>
               <th>Naslov</th>
               <th>Autor</th>
-              <th>Br. stranica</th>
-              <th>Datum izdavanja</th>
+              <th>Postoji vec:</th>
               <th>ISBN</th>
               <th>Izdavac</th>
               <th>Edit</th>
