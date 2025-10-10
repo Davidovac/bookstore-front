@@ -5,7 +5,7 @@ import { getAllPublishers } from "../services/publishers.service.jsx";
 
 const Publishers = () => {
   const [publishers, setPublishers] = useState([]);
-  const [sort, setSort] = useState("");
+  const [sort, setSort] = useState(1);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -31,11 +31,11 @@ const Publishers = () => {
     <div id="publishers-container">
       <h3>Prikaz izdavaca</h3>
       <div className="sort-container">
-        <select value={sort} onChange={e => setSort(e.target.value)} name="sortSelect" id="sortSelect">
-          <option value="nameAsc">Naziv Rastuce</option>
-          <option value="nameDesc">Naziv Opadajuce</option>
-          <option value="addressAsc">Adresa Rastuce</option>
-          <option value="addressDesc">Adresa Opadajuce</option>
+        <select value={sort} onChange={e => setSort(Number(e.target.value))} name="sortSelect" id="sortSelect">
+          <option value="0">Naziv Rastuce</option>
+          <option value="1">Naziv Opadajuce</option>
+          <option value="2">Adresa Rastuce</option>
+          <option value="3">Adresa Opadajuce</option>
         </select>
       </div>
       <table>

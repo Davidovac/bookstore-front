@@ -6,6 +6,7 @@ import "../styles.scss";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
+  const [sort, setSort] = useState(0);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -14,7 +15,7 @@ const Books = () => {
   const loadBooks = async () => {
     try {
       setLoading(true);
-      const data = await getAllBooks();
+      const data = await getAllBooks(sort);
       setBooks(data || []);
       setError('');
     } catch (error) {
@@ -53,12 +54,26 @@ const Books = () => {
   useEffect(() => {
     loadBooks();
   }, [refreshKey]);
+
+  useEffect(() => {
+      loadBooks();
+    }, [sort]);
   
   if (loading) return <div id="loadingSpinner" className="spinner"></div>;
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
   return (
     <div id="books-container">
       <h3>Prikaz knjiga</h3>
+      <div className="sort-container">
+        <select value={sort} onChange={e => setSort(Number(e.target.value))} name="sortSelect">
+          <option value="0">Naslov Rastuce</option>
+          <option value="1">Naslov Opadajuce</option>
+          <option value="2">Datum Rastuce</option>
+          <option value="3">Datum Opadajuce</option>
+          <option value="4">Autor Rastuce</option>
+          <option value="5">Autor Opadajuce</option>
+        </select>
+      </div>
       <table>
           <thead>
             <tr>

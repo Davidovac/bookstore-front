@@ -2,8 +2,8 @@ import AxiosConfig from './axiosConfig.js';
 
 const RESOURCE = '/books';
 
-export async function getAllBooks() {
-  const response = await AxiosConfig.get(RESOURCE);
+export async function getAllBooks(sort) {
+  const response = await AxiosConfig.get(`${RESOURCE}?sort=${sort}`);
   return response.data;
 }
 
