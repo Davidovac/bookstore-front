@@ -2,10 +2,22 @@ import AxiosConfig from './axiosConfig.js';
 
 const RESOURCE = '/books';
 
-export async function getAllBooks(sort) {
-  const response = await AxiosConfig.get(`${RESOURCE}?sort=${sort}`);
+export const getAllBooks = async (sort, filters = {}) => {
+  const params = new URLSearchParams();
+
+  if (filters.title) params.append("Title", filters.title);
+  if (filters.fromPublished) params.append("FromPublished", filters.fromPublished);
+  if (filters.toPublished) params.append("ToPublished", filters.toPublished);
+  if (filters.authorId) params.append("AuthorId", filters.authorId);
+  if (filters.authorName) params.append("AuthorName", filters.authorName);
+  if (filters.fromBirthDate) params.append("FromBirthDate", filters.fromBirthDate);
+  if (filters.toBirthDate) params.append("ToBirthDate", filters.toBirthDate);
+
+  params.append("sort", sort);
+
+  const response = await AxiosConfig.get(`/books?${params.toString()}`);
   return response.data;
-}
+};
 
 export async function getOneBook(id) {
   const response = await AxiosConfig.get(`${RESOURCE}/${id}`);

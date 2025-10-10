@@ -1,28 +1,69 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate } from 'react-router-dom';
 import Book from "../components/book.jsx";
-import { getAllBooks, deleteBook, updateBook } from "../services/books.service.jsx";
+import { getAllBooks, deleteBook } from "../services/books.service.jsx";
+import { getAllNames } from "../services/authors.service.jsx";
 import "../styles.scss";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
+  const [authors, setAuthors] = useState([])
   const [sort, setSort] = useState(0);
+  const [filters, setFilters] = useState({
+    title: '',
+    fromPublished: '',
+    toPublished: '',
+    authorId: '',
+    authorName: '',
+    fromBirthDate: '',
+    toBirthDate: '',
+  });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);
   const navigate = useNavigate();
 
+  function convertAllDates(data) {
+    const newData = {
+      ...data,
+      fromPublished: data.fromPublished
+        ? new Date(data.fromPublished).toISOString()
+        : null,
+      toPublished: data.toPublished
+        ? new Date(data.toPublished).toISOString()
+        : null,
+      fromBirthDate: data.fromBirthDate
+        ? new Date(data.fromBirthDate).toISOString()
+        : null,
+      toBirthDate: data.toBirthDate
+        ? new Date(data.toBirthDate).toISOString()
+        : null,
+    };
+
+    return newData;
+  }
+
   const loadBooks = async () => {
     try {
       setLoading(true);
-      const data = await getAllBooks(sort);
-      setBooks(data || []);
+      const books = await getAllBooks(sort, convertAllDates(filters));
+      const authorNames = await getAllNames();
+      setBooks(books || []);
+      setAuthors(authorNames || []);
       setError('');
     } catch (error) {
       setError('Greska pri ucitavanju knjiga.');
     }
     setLoading(false);
   }
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleDeleteBook = async (id) => {
     try {
@@ -55,9 +96,6 @@ const Books = () => {
     loadBooks();
   }, [refreshKey]);
 
-  useEffect(() => {
-      loadBooks();
-    }, [sort]);
   
   if (loading) return <div id="loadingSpinner" className="spinner"></div>;
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
@@ -73,6 +111,27 @@ const Books = () => {
           <option value="4">Autor Rastuce</option>
           <option value="5">Autor Opadajuce</option>
         </select>
+        <div className="filter-block">
+          <label>Naslov:</label>
+          <input type="text" name="title" value={filters.title} onChange={handleFilterChange} />
+          <label>Objavljena od:</label>
+          <input type="date" name="fromPublished" value={filters.fromPublished} onChange={handleFilterChange} />
+          <label>Objavljena do:</label>
+          <input type="date" name="toPublished" value={filters.toPublished} onChange={handleFilterChange} />
+          <select name="authorId" value={filters.authorId} onChange={handleFilterChange} >
+            <option value="">--Svi--</option>
+            {authors.map(a => (
+              <option key={a.id} value={a.id}>{a.fullName}</option>
+            ))}
+          </select>
+          <label>Ime Autora:</label>
+          <input type="text" name="authorName" value={filters.authorName} onChange={handleFilterChange} />
+          <label>Autorov datum rodjenja od:</label>
+          <input type="date" name="fromBirthDate" value={filters.fromBirthDate} onChange={handleFilterChange} />
+          <label>Autorov datum rodjenja do:</label>
+          <input type="date" name="toBirthDate" value={filters.toBirthDate} onChange={handleFilterChange} />
+        </div>
+        <button type="button" onClick={loadBooks}>Filtriraj</button>
       </div>
       <table>
           <thead>

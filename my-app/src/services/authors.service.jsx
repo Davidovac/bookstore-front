@@ -10,6 +10,11 @@ export async function getAllAuthorsPaged(page) {
   return response.data;
 }
 
+export async function getAllNames() {
+  const response = await AxiosConfig.get(RESOURCE + "/names")
+  return response.data
+}
+
 export async function getOneAuthors(id) {
   const response = await AxiosConfig.get(`${RESOURCE}/${id}`);
   return response.data;
