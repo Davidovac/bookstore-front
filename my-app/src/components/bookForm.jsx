@@ -1,17 +1,17 @@
 import React, {useEffect} from 'react';
-import { useForm, useFormState } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import '../styles.scss';
 
 const BookForm = ({ b, onSubmit }) => {
   const { register, handleSubmit, formState, reset } = useForm({
     defaultValues: {},
-  });
+  });;
 
 function formatDate(date) {
   const d = new Date(date);
   const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, "0"); // 01–12
-  const day = String(d.getDate()).padStart(2, "0");        // 01–31
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
 

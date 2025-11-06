@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Outlet, useNavigate } from 'react-router-dom';
 import Book from "../components/book.jsx";
-import { getAllBooks, deleteBook } from "../services/books.service.jsx";
-import { getAllNames } from "../services/authors.service.jsx";
+import { getAllBooks, deleteBook } from "../services/books.service";
+import { getAllNames } from "../services/authors.service";
+import UserContext from "../components/userContext";
 import "../styles.scss";
 
 const Books = () => {
+  const { user } = useContext(UserContext);
   const [books, setBooks] = useState([]);
   const [authors, setAuthors] = useState([])
   const [sort, setSort] = useState(0);
@@ -141,8 +143,8 @@ const Books = () => {
               <th>Postoji vec:</th>
               <th>ISBN</th>
               <th>Izdavac</th>
-              <th>Edit</th>
-              <th>Delete</th>
+              <th className={user && user.role.includes('Editor') ? "" : "hidden"}>Edit</th>
+              <th className={user && user.role.includes('Editor') ? "" : "hidden"}>Delete</th>
             </tr>
           </thead>
           <tbody>

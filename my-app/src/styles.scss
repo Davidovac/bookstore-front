@@ -215,3 +215,21 @@ table, th, td {
     }
   }
 }
+
+#profile-container {
+  border: 1px solid rgb(190, 164, 102);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin: 2rem;
+  padding: 2rem;
+  padding-top: 1rem;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.233);
+  h3 {
+    margin: 1rem;
+  }
+  p {
+    color: #8b785a;
+  }
+}

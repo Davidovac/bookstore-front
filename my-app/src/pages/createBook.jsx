@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { createBook, getOneBook, updateBook } from "../services/books.service.jsx";
 import BookForm from "../components/bookForm.jsx";
 import "../styles.scss";
+import UserContext from "../components/userContext.jsx";
 
 const CreateBook = () => {
+  const { user } = useContext(UserContext);
   const [book, setBook] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
@@ -97,6 +99,8 @@ const CreateBook = () => {
   }, [id]);
   
  
+  if (id && user && !user.role.includes('Editor')) return (<p>Niste urednik!</p>);
+  if (!id && user && !user.role.includes('Librarian')) return(<p>Niste bibliotekar!</p>);
   return (
     <div id="createBook-container">
       <h2>Forma za kreiranje/edit knjiga</h2>
