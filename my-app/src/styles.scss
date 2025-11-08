@@ -1,6 +1,54 @@
+@use "sass:color";
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@mixin container-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@mixin form-box-styles {
+  @include container-column;
+  border: 2px solid rgb(99, 99, 99);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.288);
+  background-color: #dae0d7;
+}
+
+@mixin form-inputs-focus-styles {
+  border: 2px solid #4f8aa1;
+  outline: none;
+  box-shadow: 0 0 5px #4f8aa1;
+}
+
+@mixin symbol-btn-style {
+  background-color: transparent;
+  font-weight: bold;
+  font-size: 3rem;
+  padding: 0 5px;
+  line-height: 1;
+  height: auto;
+  width: auto;
+  white-space: nowrap;
+  border: none;
+}
+
+body {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: #fcf5e8;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+a, th {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bolder;
 }
 
 $nav-color: rgb(255, 213, 164);
@@ -26,6 +74,167 @@ h3, h2 {
     }
 }
 
+.hidden {
+    display: none;
+}
+
+.over-layer-base {
+  overflow-y: scroll;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.section-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.4rem 0;
+}
+
+.section-row-start {
+  display: flex;
+  align-items: center;
+  margin: 0.4rem 0;
+}
+
+#current {
+  background-color: #5a5a5a;
+  &:hover {
+    background-color: #5a5a5a;
+  }
+}
+  
+img {
+    height: 150px;
+    width: auto;
+    
+}
+.error {
+    color: #d8000c;
+    background-color: #ffbaba;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem
+}
+
+.buttons {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  min-width: 3.5rem;
+  cursor: pointer;
+}
+
+.buttons-form {
+  width: fit-content;
+  margin-top: 1rem;
+  padding: 0.5rem 1.2rem;
+  background-color: #4f8aa1;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.menu-order-btn {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  padding: 10px 12px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+  &:hover {
+    background-color: color.adjust(#FF0000, $lightness: 20%);
+  }
+}
+.edit-btn {
+  background-color: #3498db;
+  color: white;
+  &:hover {
+    background-color: color.adjust(#3498db, $lightness: 8%);
+  }
+}
+
+.create-btn {
+  background-color: #28a745;
+  color: white;
+  &:hover {
+    background-color: color.adjust(#28a745, $lightness: 8%);
+  }
+}
+
+.create-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px;
+
+    &:hover {
+        background-color: #218838;
+    }
+}
+
+
+.add-btn {
+  @include symbol-btn-style;
+  color: green;
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
+
+.remove-btn {
+  @include symbol-btn-style;
+  color: red;
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
+
+.circle-buttons {
+  height: 1.3rem;
+  width: 1.3rem;
+  border-radius: 16px;
+  background-color: #7c6f61;
+  transition: 0.4s all;
+  &:hover {
+    cursor: pointer;
+    background-color: #584c41;
+  }
+}
+
+#center-button {
+  height: 1.9rem;
+  width: 1.9rem;
+  border-radius: 6px;
+  background-color: #554734;
+}
+
 .site-description {
     flex: 1; 
     margin: 0 0.5rem;
@@ -36,16 +245,24 @@ h3, h2 {
     height: 4vh;
     background-color: $nav-color;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     flex-shrink: 0; 
     a {
         margin: 0 2vh;
         color: rgb(54, 54, 54); 
+        &:hover {
+          color: color.adjust($color: rgb(54, 54, 54), $lightness: 40%)
+        }
     }
 }
 
-.hidden {
-    display: none;
+#nav-left-block {
+  
+}
+
+#nav-right-block {
+
 }
 
 .spinner {
@@ -89,6 +306,7 @@ table, th, td {
     thead {
       tr {
         th {
+          background-color: #d8ae70;
           padding: 0.4rem;
           color: #5c3f01;
         }
@@ -217,6 +435,7 @@ table, th, td {
 }
 
 #profile-container {
+  background-color: rgb(255, 239, 216);
   border: 1px solid rgb(190, 164, 102);
   border-radius: 10px;
   display: flex;
@@ -231,5 +450,31 @@ table, th, td {
   }
   p {
     color: #8b785a;
+  }
+}
+
+#login-container {
+  display: flex;
+  justify-content: center;
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    h2 {
+      text-align: center;
+      margin: 1rem;
+      margin-top: 2rem;
+    }
+    input {
+      width: 100%;
+      height: 1.2rem;
+    }
+  }
+  .section-row {
+    gap: 0.6rem;
+  }
+  button {
+    margin: 0;
   }
 }

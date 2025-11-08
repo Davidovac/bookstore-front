@@ -59,31 +59,23 @@ const Register = () => {
 
   if (loading) return <div id="loadingSpinner" className="spinner"></div>;
   return (
-    <form onSubmit={handleRegister} style={{ maxWidth: '300px', margin: '0 auto' }}>
-      <h2>Registracija</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <div>
+    <div id='login-container'>
+      <form onSubmit={handleRegister} style={{ maxWidth: '300px', margin: '0 auto' }}>
+        <h2>Registracija</h2>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <input type="text" placeholder="Korisničko ime"
           value={username} onChange={(e) => setUsername(e.target.value)} />
-      </div>
-      <div>
         <input type="email" placeholder="Email"
           value={email} onChange={(e) => setEmail(e.target.value)} />
-      </div>
-      <div>
         <input type="text" placeholder="Name"
           value={name} onChange={(e) => setName(e.target.value)} />
-      </div>
-      <div>
         <input type="text" placeholder="Surname"
           value={surname} onChange={(e) => setSurname(e.target.value)} />
-      </div>
-      <div>
         <input type="password" placeholder="Lozinka"
           value={password} onChange={(e) => setPassword(e.target.value)} />
-      </div>
-      <button type="submit">Registruj se</button>
-    </form>
+        <button className='buttons' type="submit">Registruj se</button>
+      </form>
+    </div>
   );
 };
 

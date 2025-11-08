@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { login } from '../services/auth.service';
+import { getGoogleToken, login } from '../services/auth.service';
 import { useNavigate } from 'react-router-dom';
 import UserContext from './userContext';
 import "../styles.scss";
@@ -50,19 +50,22 @@ const Login = () => {
 
   if (loading) return <div id="loadingSpinner" className="spinner"></div>;
   return (
-    <form onSubmit={handleLogin} style={{ maxWidth: '300px', margin: '0 auto' }}>
-      <h2>Prijava</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <div>
+    <div id='login-container'>
+      <form onSubmit={handleLogin}>
+        <h2>Prijava</h2>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <input type="text" placeholder="Korisničko ime"
-          value={username} onChange={(e) => setUsername(e.target.value)} />
-      </div>
-      <div>
+            value={username} onChange={(e) => setUsername(e.target.value)} />
         <input type="password" placeholder="Lozinka"
-          value={password} onChange={(e) => setPassword(e.target.value)} />
-      </div>
-      <button type="submit">Prijavi se</button>
-    </form>
+            value={password} onChange={(e) => setPassword(e.target.value)} />
+        <section className='section-row'>
+          <button className='buttons' type="submit">Prijavi se</button>
+          <button className='buttons' type='button' onClick={(e) => window.location.href = "http://localhost:5234/api/GoogleDrive/authorize"}>Sign in with Google</button>
+        </section>
+        
+      </form>
+    </div>
+    
   );
 };
 
