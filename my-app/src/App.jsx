@@ -10,6 +10,8 @@ import Login from './components/login';
 import Register from './components/register';
 import "./styles.scss";
 import Profile from './pages/profile';
+import Comics from './pages/comics';
+import ComicIssues from './pages/comicIssues';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -36,6 +38,8 @@ const App = () => {
             <Route path="/login" element={<Login />}/>
             <Route path="/register" element={<Register />}/>
             <Route path="/profile" element={<Profile />}/>
+            <Route path="/comics" element={<Comics />}/>
+            <Route path="/comic/:id/issues" element={<ComicIssues />}/>
             <Route path="/authors" element={<Authors />}/>
             <Route path="/publishers" element={<Publishers />}/>
             <Route path="/books" element={<Books />}/>

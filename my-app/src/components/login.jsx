@@ -23,7 +23,7 @@ const Login = () => {
       });
 
       const token = response.data;
-      localStorage.setItem('token', token);
+      localStorage.setItem('token', JSON.stringify(token));
       const payload = JSON.parse(atob(token.split('.')[1]));
       setUser(payload);
       alert('Uspesna prijava!');

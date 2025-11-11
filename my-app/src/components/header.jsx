@@ -26,6 +26,11 @@ const Header = () => {
             <Link className={current === "/createBook" ? "hidden" : ""} to="/createBook">Dodaj knjigu</Link>
           </>
         )}
+        {user && user.role && user.role.includes('Editor') && (
+          <>
+            <Link className={current === "/comics" ? "hidden" : ""} to="/comics">Stripovi</Link>
+          </>
+        )}
       </div>
       
       
