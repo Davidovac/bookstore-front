@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import UserContext from "./userContext";
 import "../styles.scss";
 
-const Book = ({b, onEdit, onDelete}) => {
+const Book = ({b, onEdit, onDelete, setForReview}) => {
   const { user } = useContext(UserContext);
   function formatDate(date) {
     date = new Date(date);
@@ -18,7 +18,8 @@ const Book = ({b, onEdit, onDelete}) => {
       <td>{b.existsFor} godina</td>
       <td>{b.isbn}</td>
       <td>{b.publisherName}</td>
-      <td className={user && user.role.includes('Editor') ? "" : "hidden"}><input type="button" value="Edit" onClick={() => onEdit()} /></td>
+      <td className={user ? "" : "hidden"}><input type="button" value="Oceni" onClick={() => setForReview(b.id)} /></td>
+      <td className={user && user.role.includes('Editor') ? "" : "hidden"}><input type="button" value="Edit" onClick={() => setForReview(b.id)} /></td>
       <td className={user && user.role.includes('Editor') ? "" : "hidden"}><input type="button" value="Delete" onClick={() => onDelete(b.id)} /></td>
     </tr>
   );

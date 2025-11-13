@@ -3,13 +3,16 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import Book from "../components/book.jsx";
 import { getAllBooks, deleteBook } from "../services/books.service";
 import { getAllNames } from "../services/authors.service";
+import { addReview } from "../services/reviews.service"
 import UserContext from "../components/userContext";
 import "../styles.scss";
+import BookReviewModal from "../components/bookReviewModal.jsx";
 
 const Books = () => {
   const { user } = useContext(UserContext);
   const [books, setBooks] = useState([]);
-  const [authors, setAuthors] = useState([])
+  const [forReview, setForReview] = useState(null);
+  const [authors, setAuthors] = useState([]);
   const [sort, setSort] = useState(0);
   const [filters, setFilters] = useState({
     title: '',
@@ -93,6 +96,39 @@ const Books = () => {
       setLoading(false);
     }
   };
+
+  const handleSubmitReview = async (data,e) => {
+    try {
+      setLoading(true);
+      const response = await addReview({...data, bookId: forReview});
+      setError('');
+      alert(`Dodata ocena!`)
+      setForReview(null);
+    }
+    catch (error) {
+      if (error.response) {
+        if (error.response.status === 400) {
+          setError('Niste uneli validne podatke.');
+        } else if (error.response.status === 404) {
+          setError('Ne postoji knjiga sa ovim id-em.');
+        } else if (error.response.status === 401) {
+          setError('Niste ulogovani.');
+        } else if (error.response.status === 500) {
+          setError('Greska na serveru. Pokusajte kasnije.');
+        } else {
+          setError(`Greska: ${error.response.status}`);
+        }
+      } else if (error.request) {
+        setError('Nema odgovora sa servera.');
+      } else {
+        setError('Doslo je do greske.');
+      }
+      console.error('Greska:', error.message);
+    }
+    finally {
+      setLoading(false);
+    }
+  }
   
   useEffect(() => {
     loadBooks();
@@ -143,17 +179,22 @@ const Books = () => {
               <th>Postoji vec:</th>
               <th>ISBN</th>
               <th>Izdavac</th>
+              <th className={user ? "" : "hidden"}>Oceni</th>
               <th className={user && user.role.includes('Editor') ? "" : "hidden"}>Edit</th>
               <th className={user && user.role.includes('Editor') ? "" : "hidden"}>Delete</th>
             </tr>
           </thead>
           <tbody>
             {books.map((b) => (
-              <Book key={b.id} b={b} onEdit={() => navigate("/createBook/" + b.id)} onDelete={handleDeleteBook}/>
+              <Book key={b.id} b={b} onEdit={() => navigate("/createBook/" + b.id)} onDelete={handleDeleteBook} setForReview={setForReview}/>
             ))}
             <Outlet />
           </tbody>
       </table>
+
+      {forReview && <div className="over-layer-base" onClick={(e) => setForReview(null)}>
+       <BookReviewModal onReviewSubmit={handleSubmitReview} />
+      </div>}
     </div>
   );
 }

@@ -53,7 +53,7 @@ const Comics = () => {
             ))}
           </tbody>
       </table>
-      {volumes.length == 0 && <p>Nema rezultata</p>}
+      {volumes.length == 0 && title && <p>Nema rezultata</p>}
     </div>
   );
 }
