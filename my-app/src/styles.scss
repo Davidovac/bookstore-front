@@ -107,6 +107,11 @@ h3, h2 {
   margin: 0.4rem 0;
 }
 
+.section-column {
+  display: flex;
+  flex-direction: column;
+}
+
 #current {
   background-color: #5a5a5a;
   &:hover {
@@ -366,11 +371,30 @@ table, th, td {
 }
 
 .filter-block {
+  display: flex;
+
+  .section-row {
+    margin-bottom: 0;
+  }
+
+  .section-column {
+    margin-right: 1rem;
+    label, p {
+      margin-bottom: auto;
+    }
+
+    >p, >label {
+      color: #633908;
+    }
+  }
   input {
     padding: 0.2rem;
-    margin-right: 2vh;
     border-radius: 5px;
     border: 1px solid black;
+  }
+
+  p {
+    margin: 0;
   }
 }
 
@@ -379,7 +403,7 @@ table, th, td {
     padding: 0.3rem;
     background-color: #1dd689;
     border-radius: 8px;
-    margin-bottom: 3vh;
+    margin: 2vh;
     width: 5rem;
     &:hover {
       cursor: pointer;

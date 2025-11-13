@@ -12,13 +12,12 @@ const Books = () => {
   const { user } = useContext(UserContext);
   const [books, setBooks] = useState([]);
   const [forReview, setForReview] = useState(null);
-  const [authors, setAuthors] = useState([]);
+  //const [authors, setAuthors] = useState([]);
   const [sort, setSort] = useState(0);
   const [filters, setFilters] = useState({
     title: '',
     fromPublished: '',
     toPublished: '',
-    authorId: '',
     authorName: '',
     fromBirthDate: '',
     toBirthDate: '',
@@ -52,9 +51,9 @@ const Books = () => {
     try {
       setLoading(true);
       const books = await getAllBooks(sort, convertAllDates(filters));
-      const authorNames = await getAllNames();
+      //const authorNames = await getAllNames();
       setBooks(books || []);
-      setAuthors(authorNames || []);
+      //setAuthors(authorNames || []);
       setError('');
     } catch (error) {
       setError('Greska pri ucitavanju knjiga.');
@@ -69,6 +68,17 @@ const Books = () => {
       [name]: value,
     }));
   };
+
+  const handleReset = () => {
+    setFilters((prev) => ({
+    title: '',
+    fromPublished: '',
+    toPublished: '',
+    authorName: '',
+    fromBirthDate: '',
+    toBirthDate: '',
+  }));
+  }
 
   const handleDeleteBook = async (id) => {
     try {
@@ -150,26 +160,49 @@ const Books = () => {
           <option value="5">Autor Opadajuce</option>
         </select>
         <div className="filter-block">
-          <label>Naslov:</label>
-          <input type="text" name="title" value={filters.title} onChange={handleFilterChange} />
-          <label>Objavljena od:</label>
-          <input type="date" name="fromPublished" value={filters.fromPublished} onChange={handleFilterChange} />
-          <label>Objavljena do:</label>
-          <input type="date" name="toPublished" value={filters.toPublished} onChange={handleFilterChange} />
-          <select name="authorId" value={filters.authorId} onChange={handleFilterChange} >
+          <section className="section-column">
+            <label>Naslov:</label>
+            <input type="text" name="title" value={filters.title} onChange={handleFilterChange} />
+          </section>
+          <section className="section-column">
+            <p>Objavljena</p>
+            <section className="section-row" style={{marginBottom: 0}}>
+              <section>
+                <label>od: </label>
+                <input type="date" name="fromPublished" value={filters.fromPublished} onChange={handleFilterChange} />
+              </section>
+              <section>
+                <label>do: </label>
+                <input type="date" name="toPublished" value={filters.toPublished} onChange={handleFilterChange} />
+              </section>
+            </section>
+          </section>
+          <section className="section-column">
+            <label>Ime Autora:</label>
+            <input type="text" name="authorName" value={filters.authorName} onChange={handleFilterChange} />
+          </section>
+          <section className="section-column">
+            <p>Autorov datum rodjenja</p>
+            <section className="section-row" style={{marginBottom: 0}}>
+              <section>
+                <label>Od: </label>
+                <input type="date" name="fromBirthDate" value={filters.fromBirthDate} onChange={handleFilterChange} />
+              </section>
+              <section>
+                <label>Do: </label>
+                <input type="date" name="toBirthDate" value={filters.toBirthDate} onChange={handleFilterChange} />
+              </section>
+            </section>
+          </section>
+          {/*<select name="authorId" value={filters.authorId} onChange={handleFilterChange} >
             <option value="">--Svi--</option>
             {authors.map(a => (
               <option key={a.id} value={a.id}>{a.fullName}</option>
             ))}
-          </select>
-          <label>Ime Autora:</label>
-          <input type="text" name="authorName" value={filters.authorName} onChange={handleFilterChange} />
-          <label>Autorov datum rodjenja od:</label>
-          <input type="date" name="fromBirthDate" value={filters.fromBirthDate} onChange={handleFilterChange} />
-          <label>Autorov datum rodjenja do:</label>
-          <input type="date" name="toBirthDate" value={filters.toBirthDate} onChange={handleFilterChange} />
+          </select>*/}
         </div>
         <button type="button" onClick={loadBooks}>Filtriraj</button>
+        <button type="button" style={{backgroundColor: 'lightblue'}} onClick={handleReset}>Reset</button>
       </div>
       <table>
           <thead>
